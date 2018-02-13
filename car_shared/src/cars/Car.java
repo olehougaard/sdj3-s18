@@ -1,9 +1,9 @@
 package cars;
 
-import java.rmi.Remote;
+import java.io.Serializable;
 import java.rmi.RemoteException;
 
-public interface Car extends Remote {
+public interface Car extends Serializable {
 	String getModel() throws RemoteException;
 	int getYear() throws RemoteException;
 	Money getPrice() throws RemoteException;

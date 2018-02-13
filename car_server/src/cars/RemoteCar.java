@@ -1,15 +1,12 @@
 package cars;
 
-import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
-
-public class RemoteCar extends UnicastRemoteObject implements Car {
+public class RemoteCar implements Car {
 	private static final long serialVersionUID = 1L;
 	private String model;
 	private int year;
 	private Money price;
 
-	public RemoteCar(String model, int year, Money price) throws RemoteException {
+	public RemoteCar(String model, int year, Money price) {
 		this.model = model;
 		this.year = year;
 		this.price = price;
