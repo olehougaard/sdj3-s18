@@ -24,9 +24,17 @@ public class RemoteCarBase extends UnicastRemoteObject implements CarBase {
 		list.addAll(cars);
 		return list;
 	}
+	
+	private static boolean carsEqual(Car car1, Car car2) throws RemoteException {
+		return car1.getModel().equals(car2.getModel()) && car1.getYear() == car2.getYear() && car1.getPrice().equals(car2.getPrice());
+	}
 
 	@Override
 	public void removeCar(Car car) throws RemoteException {
-		cars.remove(car);
+		Car found = null;
+		for(Car c: cars) 
+			if (carsEqual(c, car))
+				found = c;
+		if (found != null) cars.remove(found);
 	}
 }
