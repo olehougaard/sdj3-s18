@@ -3,7 +3,7 @@ package cars;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-public final class Money implements Serializable{
+public final class Money implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private BigDecimal amount;
 	private String currency;
