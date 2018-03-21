@@ -16,8 +16,8 @@ public class CarDAOServer extends UnicastRemoteObject implements CarDAO {
 	private static final long serialVersionUID = 1;
 	private DatabaseHelper<CarDTO> helper;
 
-	public CarDAOServer() throws RemoteException {
-		helper = new DatabaseHelper<>("jdbc:postgresql://localhost:5432/postgres?currentSchema=car_base", "postgres", "password");
+	public CarDAOServer(DatabaseHelper<CarDTO> helper) throws RemoteException {
+		this.helper = helper;
 	}
 	
 	private Connection getConnection() throws SQLException {
@@ -69,20 +69,11 @@ public class CarDAOServer extends UnicastRemoteObject implements CarDAO {
 		}
 	}
 	
-	public static void startAsServer() throws RemoteException {
-		CarDAOServer carDAOServer = new CarDAOServer();
-		Registry registry = LocateRegistry.getRegistry(1099);
-		registry.rebind("carDao", carDAOServer);
-	}
-	
-	public static void startAsTestServer() throws RemoteException, SQLException {
-		CarDAOServer carDAOServer = new CarDAOServer();
+	public static void main(String[] args) throws Exception {
+		DatabaseHelper<CarDTO> helper = new DatabaseHelper<>("jdbc:postgresql://localhost:5432/postgres?currentSchema=car_base", "postgres", "password");
+		CarDAOServer carDAOServer = new CarDAOServer(helper);
 		carDAOServer.createTestDB();
 		Registry registry = LocateRegistry.getRegistry(1099);
 		registry.rebind("carDao", carDAOServer);
-	}
-	
-	public static void main(String[] args) throws Exception {
-		startAsTestServer();
 	}
 }

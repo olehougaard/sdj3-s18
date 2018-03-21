@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ns:course xmlns:ns="http://via.dk" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://via.dk course_element.xsd ">
+	<ns:name>SDJ3</ns:name>	
+</ns:course>

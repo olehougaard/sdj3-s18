@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<course ectsPoints="5" name="SDJ3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="course_attributes.xsd">
+  <teacher initials="OIH" name="Ole Ildsgaard Hougaard"/>
+</course>

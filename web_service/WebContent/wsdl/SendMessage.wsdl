@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://message.via.dk" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://message.via.dk" xmlns:intf="http://message.via.dk" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://message.via.dk" xmlns="http://www.w3.org/2001/XMLSchema">
+   <element name="sendMessage">
+    <complexType>
+     <sequence>
+      <element name="message" type="impl:Message"/>
+     </sequence>
+    </complexType>
+   </element>
+   <complexType name="User">
+    <sequence>
+     <element name="fullname" nillable="true" type="xsd:string"/>
+     <element name="username" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="Message">
+    <sequence>
+     <element name="message" nillable="true" type="xsd:string"/>
+     <element name="receiver" nillable="true" type="impl:User"/>
+     <element name="sender" nillable="true" type="impl:User"/>
+    </sequence>
+   </complexType>
+   <element name="sendMessageResponse">
+    <complexType/>
+   </element>
+   <element name="getNewMessages">
+    <complexType/>
+   </element>
+   <element name="getNewMessagesResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" name="getNewMessagesReturn" type="impl:Message"/>
+     </sequence>
+    </complexType>
+   </element>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="sendMessageRequest">
+
+      <wsdl:part element="impl:sendMessage" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="sendMessageResponse">
+
+      <wsdl:part element="impl:sendMessageResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getNewMessagesRequest">
+
+      <wsdl:part element="impl:getNewMessages" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getNewMessagesResponse">
+
+      <wsdl:part element="impl:getNewMessagesResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:portType name="SendMessage">
+
+      <wsdl:operation name="sendMessage">
+
+         <wsdl:input message="impl:sendMessageRequest" name="sendMessageRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:sendMessageResponse" name="sendMessageResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getNewMessages">
+
+         <wsdl:input message="impl:getNewMessagesRequest" name="getNewMessagesRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getNewMessagesResponse" name="getNewMessagesResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="SendMessageSoapBinding" type="impl:SendMessage">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="sendMessage">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="sendMessageRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="sendMessageResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getNewMessages">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getNewMessagesRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getNewMessagesResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="SendMessageService">
+
+      <wsdl:port binding="impl:SendMessageSoapBinding" name="SendMessage">
+
+         <wsdlsoap:address location="http://localhost:8080/web_service/services/SendMessage"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

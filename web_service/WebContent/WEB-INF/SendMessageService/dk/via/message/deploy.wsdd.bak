@@ -1,0 +1,47 @@
+<!-- Use this file to deploy some handlers/chains and services      -->
+<!-- Two ways to do this:                                           -->
+<!--   java org.apache.axis.client.AdminClient deploy.wsdd          -->
+<!--      after the axis server is running                          -->
+<!-- or                                                             -->
+<!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   -->
+<!--      from the same directory that the Axis engine runs         -->
+
+<deployment
+    xmlns="http://xml.apache.org/axis/wsdd/"
+    xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from SendMessageService WSDL service -->
+
+  <service name="SendMessage" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://message.via.dk"/>
+      <parameter name="wsdlServiceElement" value="SendMessageService"/>
+      <parameter name="schemaQualified" value="http://message.via.dk"/>
+      <parameter name="wsdlServicePort" value="SendMessage"/>
+      <parameter name="className" value="dk.via.message.SendMessageSoapBindingImpl"/>
+      <parameter name="wsdlPortType" value="SendMessage"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation name="sendMessage" qname="operNS:sendMessage" xmlns:operNS="http://message.via.dk" soapAction="" >
+        <parameter qname="pns:message" xmlns:pns="http://message.via.dk" type="tns:Message" xmlns:tns="http://message.via.dk"/>
+      </operation>
+      <operation name="getNewMessages" qname="operNS:getNewMessages" xmlns:operNS="http://message.via.dk" returnQName="retNS:getNewMessagesReturn" xmlns:retNS="http://message.via.dk" returnType="rtns:Message" xmlns:rtns="http://message.via.dk" soapAction="" >
+      </operation>
+      <parameter name="allowedMethods" value="getNewMessages sendMessage"/>
+
+      <typeMapping
+        xmlns:ns="http://message.via.dk"
+        qname="ns:User"
+        type="java:dk.via.message.User"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://message.via.dk"
+        qname="ns:Message"
+        type="java:dk.via.message.Message"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+  </service>
+</deployment>

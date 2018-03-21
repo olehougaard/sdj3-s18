@@ -9,10 +9,15 @@ import java.util.Map;
 
 public class RemoteCarBase implements CarBase {
 	private Map<String, RemoteCar> cars = new HashMap<>();
+	private CarDAO dao;
 
+	public RemoteCarBase(CarDAO dao) {
+		this.dao = dao;
+	}
+	
 	@Override
 	public Car registerCar(String licenseNumber, String model, int year, Money price) throws RemoteException {
-		CarDTO carDTO = DAOLocator.getDAO().create(licenseNumber, model, year, price);
+		CarDTO carDTO = dao.create(licenseNumber, model, year, price);
 		RemoteCar car = new RemoteCar(carDTO);
 		cars.put(licenseNumber, car);
 		return car;
@@ -22,14 +27,14 @@ public class RemoteCarBase implements CarBase {
 	@Override
 	public Car getCar(String licenseNumber) throws RemoteException {
 		if (!cars.containsKey(licenseNumber)) {
-			cars.put(licenseNumber, new RemoteCar(DAOLocator.getDAO().read(licenseNumber)));
+			cars.put(licenseNumber, new RemoteCar(dao.read(licenseNumber)));
 		}
 		return cars.get(licenseNumber);
 	}
 
 	@Override
 	public List<Car> getAllCars() throws RemoteException {
-		Collection<CarDTO> allCars = DAOLocator.getDAO().readAll();
+		Collection<CarDTO> allCars = dao.readAll();
 		LinkedList<Car> list = new LinkedList<Car>();
 		for(CarDTO car: allCars) {
 			if (!cars.containsKey(car.getLicenseNumber())) {
@@ -42,7 +47,7 @@ public class RemoteCarBase implements CarBase {
 
 	@Override
 	public void removeCar(Car car) throws RemoteException {
-		DAOLocator.getDAO().delete(new CarDTO(car));
+		dao.delete(new CarDTO(car));
 		cars.remove(car.getLicenseNumber());
 	}
 }
