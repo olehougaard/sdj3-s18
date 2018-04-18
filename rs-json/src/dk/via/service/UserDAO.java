@@ -8,8 +8,8 @@ import dk.via.user.User;
 
 public class UserDAO {
 	private static UserDAO instance = new UserDAO();
-	private static ArrayList<User> users = new ArrayList<>();
-	private static ArrayList<Email> emails = new ArrayList<>();
+	private ArrayList<User> users = new ArrayList<>();
+	private ArrayList<Email> emails = new ArrayList<>();
 
 	private UserDAO() {
 		users.add(new User(0, "abc@example.com", "1234abcd"));

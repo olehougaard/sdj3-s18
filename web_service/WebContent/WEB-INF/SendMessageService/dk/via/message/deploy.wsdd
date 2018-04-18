@@ -2,7 +2,7 @@
 
   <!-- Services from SendMessageService WSDL service -->
 
-  <service name="SendMessage" provider="java:RPC" style="wrapped" use="literal">
+  <service name="SendMessage" provider="java:RPC" style="document" use="literal">
       <parameter name="wsdlTargetNamespace" value="http://message.via.dk"/>
       <parameter name="wsdlServiceElement" value="SendMessageService"/>
       <parameter name="schemaQualified" value="http://message.via.dk"/>
@@ -10,13 +10,17 @@
       <parameter name="className" value="dk.via.message.SendMessage"/>
       <parameter name="wsdlPortType" value="SendMessage"/>
       <parameter name="typeMappingVersion" value="1.2"/>
-      <operation xmlns:operNS="http://message.via.dk" name="sendMessage" qname="operNS:sendMessage" soapAction="">
+      <operation name="sendMessage" qname="sendMessage" soapAction="">
         <parameter xmlns:pns="http://message.via.dk" xmlns:tns="http://message.via.dk" qname="pns:message" type="tns:Message"/>
       </operation>
-      <operation xmlns:operNS="http://message.via.dk" xmlns:retNS="http://message.via.dk" xmlns:rtns="http://message.via.dk" name="getNewMessages" qname="operNS:getNewMessages" returnQName="retNS:getNewMessagesReturn" returnType="rtns:Message" soapAction="">
+      <operation name="storeMessage" qname="storeMessage" soapAction="">
+        <parameter xmlns:pns="http://message.via.dk" xmlns:tns="http://message.via.dk" qname="pns:message1" type="tns:Message"/>
       </operation>
-      <parameter name="allowedMethods" value="getNewMessages sendMessage"/>
+      <operation xmlns:retNS="http://message.via.dk" xmlns:rtns="http://message.via.dk" xmlns:tns="http://message.via.dk" name="getNewMessages" qname="getNewMessages" returnQName="retNS:getNewMessagesReturn" returnType="rtns:&gt;getNewMessagesReturn" returnItemQName="tns:item" soapAction="">
+      </operation>
+      <parameter name="allowedMethods" value="getNewMessages sendMessage storeMessage"/>
 
+      <arrayMapping xmlns:ns="http://message.via.dk" xmlns:cmp-ns="http://message.via.dk" qname="ns:&gt;getNewMessagesReturn" type="java:dk.via.message.Message[]" innerType="cmp-ns:Message" encodingStyle=""/>
       <typeMapping xmlns:ns="http://message.via.dk" qname="ns:User" type="java:dk.via.message.User" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
       <typeMapping xmlns:ns="http://message.via.dk" qname="ns:Message" type="java:dk.via.message.Message" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
   </service>

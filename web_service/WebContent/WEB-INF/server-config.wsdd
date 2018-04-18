@@ -7,8 +7,8 @@
   <ns1:parameter name="dotNetSoapEncFix" value="true"/>
   <ns1:parameter name="enableNamespacePrefixOptimization" value="false"/>
   <ns1:parameter name="sendXMLDeclaration" value="true"/>
-  <ns1:parameter name="attachments.implementation" value="org.apache.axis.attachments.AttachmentsImpl"/>
   <ns1:parameter name="sendXsiTypes" value="true"/>
+  <ns1:parameter name="attachments.implementation" value="org.apache.axis.attachments.AttachmentsImpl"/>
   <ns1:requestFlow>
    <ns1:handler type="java:org.apache.axis.handlers.JWSHandler">
     <ns1:parameter name="scope" value="session"/>
@@ -32,12 +32,15 @@
   <ns1:parameter name="allowedMethods" value="getVersion"/>
   <ns1:parameter name="className" value="org.apache.axis.Version"/>
  </ns1:service>
- <ns1:service name="SendMessage" provider="java:RPC" style="wrapped" use="literal">
-  <ns2:operation name="sendMessage" qname="ns1:sendMessage" soapAction="" xmlns:ns1="http://message.via.dk" xmlns:ns2="http://xml.apache.org/axis/wsdd/">
-   <ns2:parameter qname="ns1:message" type="ns1:Message"/>
-  </ns2:operation>
-  <ns1:operation name="getNewMessages" qname="ns2:getNewMessages" returnQName="ns2:getNewMessagesReturn" returnType="ns2:Message" soapAction="" xmlns:ns2="http://message.via.dk"/>
-  <ns1:parameter name="allowedMethods" value="getNewMessages sendMessage"/>
+ <ns1:service name="SendMessage" provider="java:RPC" style="document" use="literal">
+  <ns1:operation name="sendMessage" qname="sendMessage" soapAction="">
+   <ns2:parameter qname="ns1:message" type="ns1:Message" xmlns:ns1="http://message.via.dk" xmlns:ns2="http://xml.apache.org/axis/wsdd/"/>
+  </ns1:operation>
+  <ns1:operation name="storeMessage" qname="storeMessage" soapAction="">
+   <ns1:parameter qname="ns2:message1" type="ns2:Message" xmlns:ns2="http://message.via.dk"/>
+  </ns1:operation>
+  <ns1:operation name="getNewMessages" qname="getNewMessages" returnItemQName="ns3:item" returnQName="ns3:getNewMessagesReturn" returnType="ns3:getNewMessagesReturn" soapAction="" xmlns:ns3="http://message.via.dk"/>
+  <ns1:parameter name="allowedMethods" value="getNewMessages sendMessage storeMessage"/>
   <ns1:parameter name="typeMappingVersion" value="1.2"/>
   <ns1:parameter name="wsdlPortType" value="SendMessage"/>
   <ns1:parameter name="className" value="dk.via.message.SendMessage"/>
@@ -45,8 +48,9 @@
   <ns1:parameter name="schemaQualified" value="http://message.via.dk"/>
   <ns1:parameter name="wsdlTargetNamespace" value="http://message.via.dk"/>
   <ns1:parameter name="wsdlServiceElement" value="SendMessageService"/>
-  <ns1:typeMapping deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="" qname="ns3:User" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:dk.via.message.User" xmlns:ns3="http://message.via.dk"/>
-  <ns1:typeMapping deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="" qname="ns4:Message" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:dk.via.message.Message" xmlns:ns4="http://message.via.dk"/>
+  <ns1:typeMapping deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="" qname="ns4:User" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:dk.via.message.User" xmlns:ns4="http://message.via.dk"/>
+  <ns1:typeMapping deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="" qname="ns5:Message" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:dk.via.message.Message" xmlns:ns5="http://message.via.dk"/>
+  <ns1:arrayMapping innerType="ns6:Message" languageSpecificType="java:dk.via.message.Message[]" qname="ns6:getNewMessagesReturn" xmlns:ns6="http://message.via.dk"/>
  </ns1:service>
  <ns1:transport name="http">
   <ns1:requestFlow>
